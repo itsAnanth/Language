@@ -39,6 +39,8 @@ class Lexer:
         while self.current_char != None:
             if self.current_char in ' \t':
                 self.advance()
+            elif self.current_char == '#':
+                self.skip_comments()
             elif self.current_char in DIGITS:
                 tokens.append(self.parse_number())
             elif any(self.current_char in s for s in SYMBOLS):
@@ -51,6 +53,10 @@ class Lexer:
                 return [], 'Invalid character'
         return tokens, None
 
+    def skip_comments(self):
+        while self.current_char != '\n' and self.current_char != None:
+            self.advance()
+        self.advance()
     def parse_number(self):
         numstr = ''
         dotcount = 0
