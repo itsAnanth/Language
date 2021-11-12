@@ -1,4 +1,7 @@
 from Lexer import Lexer
+import sys
+import os
+
 
 def run(text):
     lexer = Lexer(text)
@@ -6,9 +9,11 @@ def run(text):
     return tokens, errors
 
 
-while True:
-    text = input('Basic > ')
+with open(os.path.join(sys.path[0], "code.txt"), "r") as f:
+    text = f.read()
+    # text = input('Basic > ')
     result, errors = run(text)
     if not errors:
         print(result)
-    else: print(errors)
+    else:
+        print(errors)
